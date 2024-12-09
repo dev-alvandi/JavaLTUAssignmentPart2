@@ -2,6 +2,8 @@
  * * Class for setting up the rooms and doors.
  */
 
+import items.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,15 +19,22 @@ public class DragonTreasure {
     }
 
     public void setupGame() {
+
+        // instantiating Items
+        Item key = new Key("nyckel", "");
+        Item potion = new Potion("hälsodryck", "");
+        Item treasure = new Treasure("skatt", "");
+        Item weapon = new Weapon("svärd", "");
+
         // setting up room descriptions
-        Room beginningRoom = new Room("Du börjar spelet härifrån", List.of(RoomProperty.START));
+        Room beginningRoom = new Room("Du börjar spelet härifrån", List.of(RoomIdentifier.START));
         Room lightRoom = new Room("När du går in i grottan kollapsar ingången bakom dig.\nRummet är upplyst av några ljus som sitter på ett bord framför dig.", null);
-        Room swordRoom = new Room("Du ser en död kropp på golvet.", List.of(RoomProperty.SWORD));
-        Room monsterRoom = new Room("Du ser en brinnande fackla i rummets ena hörn och känner en motbjudande stank.", List.of(RoomProperty.MONSTER));
-        Room potionRoom = new Room("Du kommer in i ett fuktigt rum med vatten sipprandes längs den västra väggen.", List.of(RoomProperty.POTION));
-        Room keyRoom = new Room("Du kommer in i ett rymligt bergrum med en ljusstrimma sipprandes genom en spricka i den östra väggen.", List.of(RoomProperty.KEY));
-        Room treasureRoom = new Room("Du kikar genom nyckelhålet och ser en skattkista full med guld.", List.of(RoomProperty.TREASURE, RoomProperty.DRAGON));
-        Room exitRoom = new Room("Du lämnar grottan med livet i behåll. Grattis, du förlorade inte!", List.of(RoomProperty.END));
+        Room swordRoom = new Room("Du ser en död kropp på golvet.", List.of(RoomIdentifier.SWORD));
+        Room monsterRoom = new Room("Du ser en brinnande fackla i rummets ena hörn och känner en motbjudande stank.", List.of(RoomIdentifier.Beast));
+        Room potionRoom = new Room("Du kommer in i ett fuktigt rum med vatten sipprandes längs den västra väggen.", List.of(RoomIdentifier.POTION));
+        Room keyRoom = new Room("Du kommer in i ett rymligt bergrum med en ljusstrimma sipprandes genom en spricka i den östra väggen.", List.of(RoomIdentifier.KEY));
+        Room treasureRoom = new Room("Du kikar genom nyckelhålet och ser en skattkista full med guld.", List.of(RoomIdentifier.TREASURE, RoomIdentifier.DRAGON));
+        Room exitRoom = new Room("Du lämnar grottan med livet i behåll. Grattis, du förlorade inte!", List.of(RoomIdentifier.END));
 
         // Assembling Doors on the Rooms
         beginningRoom.setDoors(List.of(new Door("ö", false, lightRoom)));

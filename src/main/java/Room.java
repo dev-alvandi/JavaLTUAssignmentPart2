@@ -23,11 +23,11 @@ public class Room {
 
     // instance variables
     private String roomDesc;
-    private List<RoomProperty> roomProperties;
+    private List<RoomIdentifier> roomProperties;
     private List<Door> doors;
 
     // constructor initializing with room description and room name(property)
-    public Room(String roomDesc, List<RoomProperty> roomProperties) {
+    public Room(String roomDesc, List<RoomIdentifier> roomProperties) {
         this.roomDesc = roomDesc;
         this.roomProperties = roomProperties;
     }
@@ -43,12 +43,12 @@ public class Room {
     }
 
     // method to get the room properties
-    public List<RoomProperty> getRoomProperties() {
+    public List<RoomIdentifier> getRoomProperties() {
         return roomProperties;
     }
 
     // method to set the room properties
-    public void setRoomProperties(List<RoomProperty> roomProperties) {
+    public void setRoomProperties(List<RoomIdentifier> roomProperties) {
         this.roomProperties = roomProperties;
     }
 
@@ -69,13 +69,18 @@ public class Room {
             if (door.isLocked()) {
                 System.out.printf("Du ser en låst dörr i %s [%s]%n", letterToDirection.get(door.getPosition()), door.getPosition());
             // if the player has found the exit door
-            } else if (door.getDestination().getRoomProperties() != null && door.getDestination().getRoomProperties().contains(RoomProperty.END) && door.getPosition().equals("ö")) {
+            } else if (door.getDestination().getRoomProperties() != null && door.getDestination().getRoomProperties().contains(RoomIdentifier.END) && door.getPosition().equals("ö")) {
                 System.out.println("Du ser en utgång österut [ö]");
             // otherwise other doors within the dungeon
             } else {
                 System.out.printf("Du kan gå %s [%s]%n", letterToDirection.get(door.getPosition()), door.getPosition());
             }
         }
+    }
+
+    // Method handling the battle between the instance of the Monster class and the player
+    public void doBattle() {
+
     }
 
     @Override

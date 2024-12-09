@@ -1,0 +1,1 @@
+public enum RoomIdentifier {START, SWORD, KEY, Beast, POTION, DRAGON, TREASURE, END}

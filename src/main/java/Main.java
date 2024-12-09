@@ -1,3 +1,6 @@
+import enemies.Beast;
+import enemies.Dragon;
+import enemies.Monster;
 
 /**
  * * Class for running the game.
