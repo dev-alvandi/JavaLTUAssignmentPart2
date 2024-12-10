@@ -1,4 +1,4 @@
-import items.Item;
+import objects.items.Item;
 
 import java.util.List;
 

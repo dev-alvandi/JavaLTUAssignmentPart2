@@ -1,4 +1,4 @@
-package items;
+package objects.items;
 
 public class Key extends Item {
 

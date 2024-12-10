@@ -1,4 +1,4 @@
-package enemies;
+package objects.enemies;
 
 public class Beast extends Monster{
     public Beast(String name, String monsterDescription) {

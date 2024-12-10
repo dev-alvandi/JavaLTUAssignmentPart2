@@ -1,3 +1,5 @@
+import objects.items.Treasure;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -76,33 +78,15 @@ public class Dungeon {
                 if (door.getPosition().equals(nextDirection) && !door.isLocked()) {
                     currentRoom = door.getDestination();
                     System.out.println(currentRoom.getRoomDesc());
-                    currentRoom.doNarrative();
+                    currentRoom.doNarrative(player.getInventory());
                     playerHasEnteredARoom = true;
 
                 // or if player chooses a locked door, then show picture and reprint current room narrative
                 } else if (door.getPosition().equals(nextDirection) && door.isLocked()) {
                     System.out.println("Du har ingen nyckel som passar.\n" +
                             "Du kikar genom nyckelhålet och ser en skattkista full med guld.\n" +
-                            "                  _.--.\n"+
-                            "              _.-'_:-'||\n"+
-                            "          _.-'_.-::::'||\n"+
-                            "     _.-:'_.-::::::'  ||\n"+
-                            "   .'`-.-:::::::'     ||\n"+
-                            "  /.'`;|:::::::'      ||_\n"+
-                            " ||   ||::::::'      _.;._'-._\n"+
-                            " ||   ||:::::'   _.-!oo @.!-._'-.\n"+
-                            " \'.  ||:::::.-!() oo @!()@.-'_.||\n"+
-                            "   '.'-;|:.-'.&$@.& ()$%-'o.'\\U||\n"+
-                            "     `>'-.!@%()@'@_%-'_.-o _.|'||\n"+
-                            "      ||-._'-.@.-'_.-' _.-o  |'||\n"+
-                            "      ||=[ '-._.-\\U/.-'    o |'||\n"+
-                            "      || '-.]=|| |'|      o  |'||\n"+
-                            "      ||      || |'|        _| ';\n"+
-                            "      ||      || |'|    _.-'_.-'\n"+
-                            "      |'-._   || |'|_.-'_.-'\n"+
-                            "      '-._'-.|| |' `_.-'\n"+
-                            "           '-.||_/.-'\n");
-                    currentRoom.doNarrative();
+                            Treasure.shape);
+                    currentRoom.doNarrative(player.getInventory());
                     playerHasEnteredARoom = true;
                 }
             }
@@ -110,7 +94,6 @@ public class Dungeon {
             // Exception is thrown if player chooses wrong direction
             if (!playerHasEnteredARoom) {
                 System.out.println("Du har gått in i fel riktning. Försök igen!");
-                continue;
             }
         }
     }
