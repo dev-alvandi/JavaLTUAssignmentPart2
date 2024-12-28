@@ -2,7 +2,7 @@ package objects.items;
 
 public class Treasure extends Item{
 
-    public static String shape =
+    public static String treasureShape =
             "                  _.--.\n"+
             "              _.-'_:-'||\n"+
             "          _.-'_.-::::'||\n"+

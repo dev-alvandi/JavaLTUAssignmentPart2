@@ -1,12 +1,7 @@
 import objects.RoomProperty;
 import objects.enemies.Monster;
-import objects.items.Item;
-import objects.items.Key;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * * Class for constructing the rooms, and for displaying
@@ -39,18 +34,19 @@ public class Room {
 
 
     // method with narratives for doors
-    public void doNarrative(List<Item> playerInventory) {
+    public void doNarrative(Player player) {
         for (Door door : doors) {
             // if door is locked 
-            if (door.isLocked() &&
-                    !RoomProperty.containsSpecificSubClassOfRoomProperty(playerInventory, Key.class)) {
+            if (door.isLocked() && !player.getInventory().containsKey("nyckeln")) {
                 System.out.printf("Du ser en låst dörr i %s [%s]%n",
                         letterToDirection.get(door.getPosition()),
                         door.getPosition());
             // if the player has found the exit door
-            } else if (door.getDestination().getRoomProperties() != null &&
-                    Monster.containsSpecificSubClassOfRoomProperty(door.getDestination().getRoomProperties(), Monster.class) &&
-                    door.getPosition().equals("ö")) {
+            } else if (door.isLocked() && player.getInventory().containsKey("nyckeln")) {
+                System.out.printf("Du kan gå %s [%s]%n",
+                        letterToDirection.get(door.getPosition()),
+                        door.getPosition());
+            } else if (door.getDestination().getRoomProperties().isEmpty() && player.getHealthPoints() > 0 && door.getPosition().equals("ö")) {
                 System.out.println("Du ser en utgång österut [ö]");
             // otherwise other doors within the dungeon
             } else {
@@ -64,7 +60,34 @@ public class Room {
 
 
     // Method handling the battle between the instance of the Monster class and the player
-    public void doBattle() {
+    public boolean doBattle(Player player, Monster monster) {
+        if (monster.getName().equals("drake")) {
+            System.out.println(Monster.dragonShape);
+            System.out.println("En arg drake dyker upp");
+        }
+
+        while (monster.getHealthPoints() > 0 && player.getHealthPoints() > 0) {
+            System.out.printf("Ett %s attackerar dig och gör %d skada. %n", monster.getName(), monster.getDamage());
+            System.out.printf("Du attackerar odjuret och gör %d skada. %n", player.getDamage());
+
+            monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
+            player.setHealthPoints(player.getHealthPoints() - monster.getDamage());
+        }
+
+        if (player.getHealthPoints() > 0 && player.getInventory().containsKey("hälsodrycken")) {
+
+        }
+
+        if (monster.getHealthPoints() <= 0) {
+            // Victory!
+            System.out.println("Du besegrar draken och samlar skatten.\n" +
+                    "Kan du fly denna grotta med alla dina rikedomar?");
+            return true;
+        } else {
+            System.out.println("Tyvärr har du blivit eliminerad :(. Försök igen från början!");
+            return false;
+        }
+
 
     }
 

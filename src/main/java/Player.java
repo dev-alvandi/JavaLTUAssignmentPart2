@@ -1,6 +1,7 @@
 import objects.items.Item;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * * Class for constructing the player with player name.
@@ -13,7 +14,7 @@ public class Player {
     private int healthPoints;
     private int damage;
 
-    private List<Item> inventory;
+    private Map<String, Item> inventory = new HashMap<>();
 
     // constructor initializing the player with name
     public Player(String name) {
@@ -27,12 +28,24 @@ public class Player {
         return name;
     }
 
-    public List<Item> getInventory() {
+    public Map<String, Item> getInventory() {
         return inventory;
     }
 
-    public void addToInventory(Item newItem) {
-        this.inventory.add(newItem);
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void addToInventory(String newItemName, Item newItem) {
+        this.inventory.put(newItemName, newItem);
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
     }
 
     // Can be modified in case the player possesses the Sword (2 damage unit)

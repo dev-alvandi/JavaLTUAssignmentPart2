@@ -2,27 +2,67 @@ package objects.enemies;
 
 import objects.RoomProperty;
 
-import java.util.List;
-import java.util.Objects;
-
 public class Monster extends RoomProperty {
 
-    protected int healthPoints;
+    public static String dragonShape =
+            "                                                  .~))>>\n"+
+                    "                                                 .~)>>\n"+
+                    "                                               .~))))>>>\n"+
+                    "                                             .~))>>             ___\n"+
+                    "                                           .~))>>)))>>      .-~))>>\n"+
+                    "                                         .~)))))>>       .-~))>>)>\n"+
+                    "                                       .~)))>>))))>>  .-~)>>)>\n"+
+                    "                   )                 .~))>>))))>>  .-~)))))>>)>\n"+
+                    "                ( )@@*)             //)>))))))  .-~))))>>)>\n"+
+                    "              ).@(@@               //))>>))) .-~))>>)))))>>)>\n"+
+                    "            (( @.@).              //))))) .-~)>>)))))>>)>\n"+
+                    "          ))  )@@*.@@ )          //)>))) //))))))>>))))>>)>\n"+
+                    "       ((  ((@@@.@@             |/))))) //)))))>>)))>>)>\n"+
+                    "      )) @@*. )@@ )   (\\_(\\-\\b  |))>)) //)))>>)))))))>>)>\n"+
+                    "    (( @@@(.@(@ .    _/`-`  ~|b |>))) //)>>)))))))>>)>\n"+
+                    "     )* @@@ )@*     (@)  (@) /\\b|))) //))))))>>))))>>\n"+
+                    "   (( @. )@( @ .   _/  /    /  \\b)) //))>>)))))>>>_._\n"+
+                    "    )@@ (@@*)@@.  (6///6)- / ^  \\b)//))))))>>)))>>   ~~-.\n"+
+                    " ( @jgs@@. @@@.*@_ VvvvvV//  ^  \\b/)>>))))>>      _.     `bb\n"+
+                    " ((@@ @@@*.(@@ . - | o |' \\ (  ^   \\b)))>>        .'       b`,\n"+
+                    "   ((@@).*@@ )@ )   \\^^^/  ((   ^  ~)_        \\  /           b `,\n"+
+                    "     (@@. (@@ ).     `-'   (((   ^    `\\ \\ \\ \\ \\|             b  `.\n"+
+                    "       (*.@*              / ((((        \\| | |  \\       .       b `.\n"+
+                    "                         / / (((((  \\    \\ /  _.-~\\     Y,      b  ;\n"+
+                    "                        / / / (((((( \\    \\.-~   _.`\" _.-~`,    b  ;\n"+
+                    "                       /   /   `(((((()    )    (((((~      `,  b  ;\n"+
+                    "                     _/  _/      `\"\"\"/   /'                  ; b   ;\n"+
+                    "                 _.-~_.-~           /  /'                _.'~bb _.'\n"+
+                    "               ((((~~              / /'              _.'~bb.--~\n"+
+                    "                                  ((((          __.-~bb.-~\n"+
+                    "                                              .'  b .~~\n"+
+                    "                                              :bb ,' \n"+
+                    "                                              ~~~~\n";
+
+    private int healthPoints;
     private int damage;
 
-    public Monster(String name, String monsterDescription) {
-        super(name, monsterDescription);
+    public Monster(String name, String description, int healthPoints) {
+        super(name, description);
+        this.healthPoints = healthPoints;
         this.damage = 1;
     }
 
-//    public static boolean containsMonster(List<RoomProperty> roomProperties) {
-//        for (RoomProperty roomProperty : roomProperties) {
-//            if (roomProperty instanceof Monster) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 
     @Override
     public boolean equals(Object o) {

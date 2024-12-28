@@ -1,4 +1,8 @@
+import objects.RoomProperty;
+import objects.enemies.Monster;
+import objects.items.Item;
 import objects.items.Treasure;
+import objects.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +20,7 @@ public class Dungeon {
     private String welcomeMessage;
     private List<String> directions = new ArrayList<>(List.of("ö", "n", "s", "v"));
     private boolean playerHasEnteredARoom;
+    private boolean isLoopRunning = true;
 
     // constructor initializing the dungeon along with a welcome message
     public Dungeon() {
@@ -29,8 +34,6 @@ public class Dungeon {
         DragonTreasure dragonTreasure = new DragonTreasure();
         // create the rooms, which are stored in an array list
         dragonTreasure.setupGame();
-
-        currentRoom = dragonTreasure.getRooms().get(0);
 
         System.out.println(welcomeMessage);
 
@@ -47,54 +50,120 @@ public class Dungeon {
         System.out.println("Grottöppningen är österut. Skriv \"ö\" och tryck på [Enter] för att komma in i grottan");
 
         // game runs until the player chooses the exit door/room
-        while (true) {
+        while (isLoopRunning) {
             // Convert input to lowercase to simplify comparison logic
-            String nextDirection = scanner.nextLine().toLowerCase();
+            String userInput = scanner.nextLine().toLowerCase();
 
             // At this point player has not entered the chosen room
             playerHasEnteredARoom = false;
 
             // User may exit the program using q or Q
-            if (nextDirection.equals("q")) {
-                break;
+            if (userInput.equals("q")) {
+                isLoopRunning = false;
             }
 
             // Giving an error message in case user does not use one of 4 directions.
-            if (!directions.contains(nextDirection)) {
-                System.out.println("Du får bara skriva en av dessa fyra bokstäver för att navigera genom rum, nämligen \"ö\", \"v\", \"s\", eller \"n\". Försök igen!");
-                continue;
+//            if (!directions.contains(userInput)) {
+//                System.out.println("Du får bara skriva en av dessa fyra bokstäver för att navigera genom rum, nämligen \"ö\", \"v\", \"s\", eller \"n\". Försök igen!");
+//                continue;
+//            }
+
+            // Handling filling yp the health point
+            if (userInput.equals("d") && player.getHealthPoints() < 10) {
+                player.setHealthPoints(10);
+                player.getInventory().remove("hälsodrycken");
+            }
+
+            if (userInput.equals("h")) {
+                System.out.printf("Du har %d hälsopoäng.%n", player.getHealthPoints());
             }
 
             // end the game when player chooses the exit door
-            if (currentRoom.equals(dragonTreasure.getRooms().get(3)) && nextDirection.equals("ö")) {
+            if (currentRoom.equals(dragonTreasure.getRooms().get(3)) && userInput.equals("ö")) {
                 System.out.println("Du lämnar grottan med livet i behåll. Grattis, du förlorade inte!");
                 break;
             }
 
+
             // output for if player chooses a door within the dungeon
             for (Door door : currentRoom.getDoors()) {
 
-                // if player chooses an unlocked door, proceed with narrative for the next room
-                if (door.getPosition().equals(nextDirection) && !door.isLocked()) {
+                // if player chooses an unlocked door, proceed with narrative to the next room
+                if (door.getPosition().equals(userInput) && !door.isLocked()) {
                     currentRoom = door.getDestination();
                     System.out.println(currentRoom.getRoomDesc());
-                    currentRoom.doNarrative(player.getInventory());
-                    playerHasEnteredARoom = true;
 
-                // or if player chooses a locked door, then show picture and reprint current room narrative
-                } else if (door.getPosition().equals(nextDirection) && door.isLocked()) {
+                    currentRoom.doNarrative(player);
+                    playerHasEnteredARoom = true;
+                    System.out.println("Du kan se din hälsopoäng [h]");
+
+                    // or if player chooses a locked door, then show picture and reprint current room narrative
+                } else if (door.getPosition().equals(userInput) && door.isLocked() && !player.getInventory().containsKey("nyckeln")) {
                     System.out.println("Du har ingen nyckel som passar.\n" +
                             "Du kikar genom nyckelhålet och ser en skattkista full med guld.\n" +
-                            Treasure.shape);
-                    currentRoom.doNarrative(player.getInventory());
+                            Treasure.treasureShape);
+
+                    currentRoom.doNarrative(player);
                     playerHasEnteredARoom = true;
+                    System.out.println("Du kan se din hälsopoäng [h]");
+
+                } else if (door.getPosition().equals(userInput) && door.isLocked() && player.getInventory().containsKey("nyckeln")) {
+                    currentRoom = door.getDestination();
+
+                    currentRoom.doNarrative(player);
+                    playerHasEnteredARoom = true;
+                    System.out.println("Du kan se din hälsopoäng [h]");
+
+                }
+
+            }
+
+            // BUG HERE
+            for (RoomProperty roomProperty : currentRoom.getRoomProperties()) {
+                if (roomProperty instanceof Monster && currentRoom.doBattle(player, (Monster) roomProperty)) {
+                    if (roomProperty.getName().equals("drake")) {
+                        player.addToInventory("skatten",
+                                (Item) currentRoom.getRoomProperties()
+                                        .stream()
+                                        .filter(item -> item.getName().equals("skatten")).findFirst().get());
+                    }
+
+                    currentRoom.setRoomProperties(new ArrayList<>());
+                    break;
+                } else if (roomProperty instanceof Monster) {
+                    isLoopRunning = false;
                 }
             }
 
-            // Exception is thrown if player chooses wrong direction
-            if (!playerHasEnteredARoom) {
-                System.out.println("Du har gått in i fel riktning. Försök igen!");
+
+            for (RoomProperty roomProperty : currentRoom.getRoomProperties()) {
+                if ((roomProperty instanceof Item) && userInput.equals("p")) {
+                    if (roomProperty.getName().equals("hälsodrycken") && player.getHealthPoints() < 10) {
+                        player.setHealthPoints(10);
+                        System.out.println("Du tog upp och drack hälsodrycken. Nu har du max hälsopoängen (10)");
+                    } else {
+                        System.out.printf("Du tog upp %s.%n", roomProperty.getName());
+                        currentRoom.doNarrative(player);
+                        System.out.println("Du kan se din hälsopoäng [h]");
+                        player.addToInventory(roomProperty.getName(), (Item) roomProperty);
+                    }
+                    currentRoom.setRoomProperties(new ArrayList<>());
+                    if (roomProperty instanceof Weapon) {
+                        player.setDamage(2);
+                    }
+
+                } else if (roomProperty instanceof Item) {
+                    System.out.println(roomProperty.getDescription());
+                }
             }
+
+
+
+
+//            // Exception is thrown if player chooses wrong direction
+//            if (!playerHasEnteredARoom) {
+//                System.out.println("Du har gått in i fel riktning. Försök igen!");
+//            }
         }
     }
 }
