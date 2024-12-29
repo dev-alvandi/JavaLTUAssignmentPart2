@@ -1,5 +1,6 @@
 import objects.RoomProperty;
 import objects.enemies.Monster;
+import objects.items.Item;
 
 import java.util.*;
 
@@ -34,7 +35,27 @@ public class Room {
 
 
     // method with narratives for doors
-    public void doNarrative(Player player) {
+    public boolean doNarrative(Player player) {
+
+        for (RoomProperty roomProperty : this.getRoomProperties()) {
+            if (roomProperty instanceof Monster && this.doBattle(player, (Monster) roomProperty)) {
+                if (roomProperty.getName().equals("drake")) {
+                    player.addToInventory("skatten",
+                            (Item) this.getRoomProperties()
+                                    .stream()
+                                    .filter(item -> item.getName().equals("skatten")).findFirst().get());
+                }
+
+                this.setRoomProperties(new ArrayList<>());
+                break;
+            } else if (roomProperty instanceof Monster) {
+                return false;
+            }
+
+            System.out.println();
+        }
+
+
         for (Door door : doors) {
             // if door is locked 
             if (door.isLocked() && !player.getInventory().containsKey("nyckeln")) {
@@ -55,6 +76,8 @@ public class Room {
                         door.getPosition());
             }
         }
+
+        return true;
     }
 
 

@@ -68,22 +68,26 @@ public class Dungeon {
 //                continue;
 //            }
 
-            // Handling filling yp the health point
+            // Handling filling up the health point
             if (userInput.equals("d") && player.getHealthPoints() < 10) {
                 player.setHealthPoints(10);
                 player.getInventory().remove("hälsodrycken");
+
             }
 
             if (userInput.equals("h")) {
                 System.out.printf("Du har %d hälsopoäng.%n", player.getHealthPoints());
+                currentRoom.doNarrative(player);
             }
 
             // end the game when player chooses the exit door
-            if (currentRoom.equals(dragonTreasure.getRooms().get(3)) && userInput.equals("ö")) {
+            if (currentRoom.equals(dragonTreasure.getRooms().get(3)) && userInput.equals("ö") && player.getInventory().containsKey("skatten")) {
+                System.out.println(Treasure.treasureShape + "Du lämnar grottan med skatten. Grattis, du vann!");
+                break;
+            } else if (currentRoom.equals(dragonTreasure.getRooms().get(3)) && userInput.equals("ö")) {
                 System.out.println("Du lämnar grottan med livet i behåll. Grattis, du förlorade inte!");
                 break;
             }
-
 
             // output for if player chooses a door within the dungeon
             for (Door door : currentRoom.getDoors()) {
@@ -93,7 +97,9 @@ public class Dungeon {
                     currentRoom = door.getDestination();
                     System.out.println(currentRoom.getRoomDesc());
 
-                    currentRoom.doNarrative(player);
+                    if(!currentRoom.doNarrative(player)) {
+                        isLoopRunning = false;
+                    }
                     playerHasEnteredARoom = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
 
@@ -103,36 +109,23 @@ public class Dungeon {
                             "Du kikar genom nyckelhålet och ser en skattkista full med guld.\n" +
                             Treasure.treasureShape);
 
-                    currentRoom.doNarrative(player);
+                    if(!currentRoom.doNarrative(player)) {
+                        isLoopRunning = false;
+                    }
                     playerHasEnteredARoom = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
 
                 } else if (door.getPosition().equals(userInput) && door.isLocked() && player.getInventory().containsKey("nyckeln")) {
                     currentRoom = door.getDestination();
 
-                    currentRoom.doNarrative(player);
+                    if(!currentRoom.doNarrative(player)) {
+                        isLoopRunning = false;
+                    }
                     playerHasEnteredARoom = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
 
                 }
 
-            }
-
-            // BUG HERE
-            for (RoomProperty roomProperty : currentRoom.getRoomProperties()) {
-                if (roomProperty instanceof Monster && currentRoom.doBattle(player, (Monster) roomProperty)) {
-                    if (roomProperty.getName().equals("drake")) {
-                        player.addToInventory("skatten",
-                                (Item) currentRoom.getRoomProperties()
-                                        .stream()
-                                        .filter(item -> item.getName().equals("skatten")).findFirst().get());
-                    }
-
-                    currentRoom.setRoomProperties(new ArrayList<>());
-                    break;
-                } else if (roomProperty instanceof Monster) {
-                    isLoopRunning = false;
-                }
             }
 
 
@@ -141,6 +134,7 @@ public class Dungeon {
                     if (roomProperty.getName().equals("hälsodrycken") && player.getHealthPoints() < 10) {
                         player.setHealthPoints(10);
                         System.out.println("Du tog upp och drack hälsodrycken. Nu har du max hälsopoängen (10)");
+                        currentRoom.doNarrative(player);
                     } else {
                         System.out.printf("Du tog upp %s.%n", roomProperty.getName());
                         currentRoom.doNarrative(player);

@@ -30,27 +30,6 @@ public class RoomProperty {
         this.description = description;
     }
 
-    public static <T extends RoomProperty> boolean containsSpecificSubClassOfRoomProperty(
-            List<? extends RoomProperty> roomProperties,
-            Class<T> roomPropertyClass) {
-        for (RoomProperty roomProperty : roomProperties) {
-            if (roomPropertyClass.isInstance(roomProperty)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static <T extends RoomProperty> void removeSpecificRoomPropertyFromRoom(
-            List<? extends RoomProperty> roomProperties,
-            Class<T> roomPropertyClass) {
-        for (RoomProperty roomProperty : roomProperties) {
-            if (roomPropertyClass.isInstance(roomProperty)) {
-                roomProperties.remove(roomProperty);
-            }
-        }
-    }
-
     @Override
     public String toString() {
         return "RoomProperty{" +
