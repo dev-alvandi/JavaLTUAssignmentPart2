@@ -1,9 +1,5 @@
 package objects;
 
-import objects.enemies.Monster;
-
-import java.util.List;
-
 public class RoomProperty {
 
     private String name;

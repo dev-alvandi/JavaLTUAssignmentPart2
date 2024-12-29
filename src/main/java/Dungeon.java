@@ -19,7 +19,7 @@ public class Dungeon {
     private Room currentRoom;
     private String welcomeMessage;
     private List<String> directions = new ArrayList<>(List.of("ö", "n", "s", "v"));
-    private boolean playerHasEnteredARoom;
+    private boolean isCorrectInputEnterred;
     private boolean isLoopRunning = true;
 
     // constructor initializing the dungeon along with a welcome message
@@ -55,34 +55,30 @@ public class Dungeon {
             String userInput = scanner.nextLine().toLowerCase();
 
             // At this point player has not entered the chosen room
-            playerHasEnteredARoom = false;
+            isCorrectInputEnterred = false;
 
             // User may exit the program using q or Q
             if (userInput.equals("q")) {
                 isLoopRunning = false;
             }
 
-            // Giving an error message in case user does not use one of 4 directions.
-//            if (!directions.contains(userInput)) {
-//                System.out.println("Du får bara skriva en av dessa fyra bokstäver för att navigera genom rum, nämligen \"ö\", \"v\", \"s\", eller \"n\". Försök igen!");
-//                continue;
-//            }
-
             // Handling filling up the health point
             if (userInput.equals("d") && player.getHealthPoints() < 10) {
                 player.setHealthPoints(10);
                 player.getInventory().remove("hälsodrycken");
-
+                isCorrectInputEnterred = true;
             }
 
             if (userInput.equals("i")) {
                 System.out.println(player.printInventory());
                 currentRoom.doNarrative(player);
+                isCorrectInputEnterred = true;
             }
 
             if (userInput.equals("h")) {
                 System.out.printf("Du har %d hälsopoäng.%n", player.getHealthPoints());
                 currentRoom.doNarrative(player);
+                isCorrectInputEnterred = true;
             }
 
             // end the game when player chooses the exit door
@@ -105,7 +101,7 @@ public class Dungeon {
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
                     }
-                    playerHasEnteredARoom = true;
+                    isCorrectInputEnterred = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
                     System.out.println("Du kan se ditt lager [i]");
 
@@ -118,7 +114,7 @@ public class Dungeon {
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
                     }
-                    playerHasEnteredARoom = true;
+                    isCorrectInputEnterred = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
                     System.out.println("Du kan se ditt lager [i]");
 
@@ -128,7 +124,7 @@ public class Dungeon {
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
                     }
-                    playerHasEnteredARoom = true;
+                    isCorrectInputEnterred = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
                     System.out.println("Du kan se ditt lager [i]");
                 }
@@ -153,7 +149,7 @@ public class Dungeon {
                     if (roomProperty instanceof Weapon) {
                         player.setDamage(2);
                     }
-
+                    isCorrectInputEnterred = true;
                 } else if (roomProperty instanceof Item) {
                     System.out.println(roomProperty.getDescription());
                 }
@@ -163,9 +159,9 @@ public class Dungeon {
 
 
 //            // Exception is thrown if player chooses wrong direction
-//            if (!playerHasEnteredARoom) {
-//                System.out.println("Du har gått in i fel riktning. Försök igen!");
-//            }
+            if (!isCorrectInputEnterred) {
+                System.out.println("Du har skrivit fel. Försök igen!");
+            }
         }
     }
 }
