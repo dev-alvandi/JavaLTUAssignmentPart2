@@ -77,6 +77,10 @@ public class Room {
             }
         }
 
+        if (player.getHealthPoints() < 10 && player.getInventory().containsKey("hälsodrycken")) {
+            System.out.println("Du kan ju hela din hälsopoäng genom att dricka hälsodrycken från lagret [d]");
+        }
+
         return true;
     }
 
@@ -93,10 +97,6 @@ public class Room {
 
             monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
             player.setHealthPoints(player.getHealthPoints() - monster.getDamage());
-        }
-
-        if (player.getHealthPoints() > 0 && player.getInventory().containsKey("hälsodrycken")) {
-
         }
 
         if (monster.getHealthPoints() <= 0) {

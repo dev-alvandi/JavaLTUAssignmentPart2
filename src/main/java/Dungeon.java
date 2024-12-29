@@ -65,6 +65,8 @@ public class Dungeon {
             // Handling filling up the health point
             if (userInput.equals("d") && player.getHealthPoints() < 10) {
                 player.setHealthPoints(10);
+                System.out.println("Du tog upp och drack hälsodrycken. Nu har du max hälsopoängen (10)");
+                currentRoom.doNarrative(player);
                 player.getInventory().remove("hälsodrycken");
                 isCorrectInputEnterred = true;
             }
