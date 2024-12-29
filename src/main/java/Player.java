@@ -1,7 +1,9 @@
+import objects.RoomProperty;
 import objects.items.Item;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * * Class for constructing the player with player name.
@@ -51,5 +53,14 @@ public class Player {
     // Can be modified in case the player possesses the Sword (2 damage unit)
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public String printInventory() {
+        if (!this.inventory.isEmpty()) {
+            return "Du har följande artiklar i ditt lager: " + this.inventory.values().stream()
+                    .map(RoomProperty::getName).collect(Collectors.joining(", "));
+        }
+
+        return "Ditt lager är tomt";
     }
 }

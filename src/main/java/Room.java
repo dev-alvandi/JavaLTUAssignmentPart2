@@ -80,8 +80,6 @@ public class Room {
         return true;
     }
 
-
-
     // Method handling the battle between the instance of the Monster class and the player
     public boolean doBattle(Player player, Monster monster) {
         if (monster.getName().equals("drake")) {
@@ -114,31 +112,6 @@ public class Room {
 
     }
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "roomDesc='" + roomDesc + '\'' +
-                ", roomProperties=" + roomProperties +
-                ", doors=" + doors +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Room room = (Room) o;
-        return Objects.equals(getRoomDesc(), room.getRoomDesc()) && Objects.equals(getRoomProperties(), room.getRoomProperties()) && Objects.equals(getDoors(), room.getDoors());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hashCode(getRoomDesc());
-        result = 31 * result + Objects.hashCode(getRoomProperties());
-        result = 31 * result + Objects.hashCode(getDoors());
-        return result;
-    }
-
     // method to get the room descriptions
     public String getRoomDesc() {
         return roomDesc;
@@ -167,6 +140,31 @@ public class Room {
     // method to set the door list
     public void setDoors(List<Door> doors) {
         this.doors = doors;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomDesc='" + roomDesc + '\'' +
+                ", roomProperties=" + roomProperties +
+                ", doors=" + doors +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Room room = (Room) o;
+        return Objects.equals(getRoomDesc(), room.getRoomDesc()) && Objects.equals(getRoomProperties(), room.getRoomProperties()) && Objects.equals(getDoors(), room.getDoors());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(getRoomDesc());
+        result = 31 * result + Objects.hashCode(getRoomProperties());
+        result = 31 * result + Objects.hashCode(getDoors());
+        return result;
     }
 }
 

@@ -75,6 +75,11 @@ public class Dungeon {
 
             }
 
+            if (userInput.equals("i")) {
+                System.out.println(player.printInventory());
+                currentRoom.doNarrative(player);
+            }
+
             if (userInput.equals("h")) {
                 System.out.printf("Du har %d hälsopoäng.%n", player.getHealthPoints());
                 currentRoom.doNarrative(player);
@@ -102,6 +107,7 @@ public class Dungeon {
                     }
                     playerHasEnteredARoom = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
+                    System.out.println("Du kan se ditt lager [i]");
 
                     // or if player chooses a locked door, then show picture and reprint current room narrative
                 } else if (door.getPosition().equals(userInput) && door.isLocked() && !player.getInventory().containsKey("nyckeln")) {
@@ -114,6 +120,7 @@ public class Dungeon {
                     }
                     playerHasEnteredARoom = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
+                    System.out.println("Du kan se ditt lager [i]");
 
                 } else if (door.getPosition().equals(userInput) && door.isLocked() && player.getInventory().containsKey("nyckeln")) {
                     currentRoom = door.getDestination();
@@ -123,7 +130,7 @@ public class Dungeon {
                     }
                     playerHasEnteredARoom = true;
                     System.out.println("Du kan se din hälsopoäng [h]");
-
+                    System.out.println("Du kan se ditt lager [i]");
                 }
 
             }
@@ -139,6 +146,7 @@ public class Dungeon {
                         System.out.printf("Du tog upp %s.%n", roomProperty.getName());
                         currentRoom.doNarrative(player);
                         System.out.println("Du kan se din hälsopoäng [h]");
+                        System.out.println("Du kan se ditt lager [i]");
                         player.addToInventory(roomProperty.getName(), (Item) roomProperty);
                     }
                     currentRoom.setRoomProperties(new ArrayList<>());
