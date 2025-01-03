@@ -52,7 +52,6 @@ public class Room {
                 return false;
             }
 
-            System.out.println();
         }
 
 
@@ -99,12 +98,20 @@ public class Room {
             player.setHealthPoints(player.getHealthPoints() - monster.getDamage());
         }
 
+        
         if (monster.getHealthPoints() <= 0) {
-            // Victory!
-            System.out.println("Du besegrar draken och samlar skatten.\n" +
-                    "Kan du fly denna grotta med alla dina rikedomar?");
-            return true;
-        } else {
+            if (monster.getName().equals("drake")) {
+                // Victory!
+                System.out.println("Du besegrar draken och samlar skatten.\n" +
+                        "Kan du fly denna grotta med alla dina rikedomar?");
+                return true;
+            }
+            else {
+                System.out.println("Du besegrar odjuret.");
+                return true;
+            }
+        } 
+        else {
             System.out.println("Tyvärr har du blivit eliminerad :(. Försök igen från början!");
             return false;
         }

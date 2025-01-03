@@ -75,12 +75,16 @@ public class Dungeon {
                 System.out.println(player.printInventory());
                 currentRoom.doNarrative(player);
                 isCorrectInputEnterred = true;
+                System.out.println("Du kan se din hälsopoäng [h]");
+                System.out.println("Du kan se ditt lager [i]");
             }
 
             if (userInput.equals("h")) {
                 System.out.printf("Du har %d hälsopoäng.%n", player.getHealthPoints());
                 currentRoom.doNarrative(player);
                 isCorrectInputEnterred = true;
+                System.out.println("Du kan se din hälsopoäng [h]");
+                System.out.println("Du kan se ditt lager [i]");
             }
 
             // end the game when player chooses the exit door
@@ -141,7 +145,7 @@ public class Dungeon {
                         System.out.println("Du tog upp och drack hälsodrycken. Nu har du max hälsopoängen (10)");
                         currentRoom.doNarrative(player);
                     } else {
-                        System.out.printf("Du tog upp %s.%n", roomProperty.getName());
+                        System.out.printf("Du tog upp %s.", roomProperty.getName());
                         currentRoom.doNarrative(player);
                         System.out.println("Du kan se din hälsopoäng [h]");
                         System.out.println("Du kan se ditt lager [i]");
