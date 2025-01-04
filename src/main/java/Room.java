@@ -91,22 +91,17 @@ public class Room {
         }
 
         while (monster.getHealthPoints() > 0 && player.getHealthPoints() > 0) {
-            
+
             if (monster.getName().equals("drake")) {
-                System.out.printf("En %s attackerar dig och gör %d skada. %n", monster.getName(), monster.getDamage());
+                System.out.printf("En drake attackerar dig och gör %d skada. %n", monster.getDamage());
                 System.out.printf("Du attackerar draken och gör %d skada. %n", player.getDamage());
-
-                monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
-                player.setHealthPoints(player.getHealthPoints() - monster.getDamage()); 
-            }
-            else {
-                System.out.printf("Ett %s attackerar dig och gör %d skada. %n", monster.getName(), monster.getDamage());
+            } else {
+                System.out.printf("Ett odjur attackerar dig och gör %d skada. %n", monster.getDamage());
                 System.out.printf("Du attackerar odjuret och gör %d skada. %n", player.getDamage());
-
-                monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
-                player.setHealthPoints(player.getHealthPoints() - monster.getDamage());
             }
-            
+
+            monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
+            player.setHealthPoints(player.getHealthPoints() - monster.getDamage());
         }
 
         
@@ -115,13 +110,11 @@ public class Room {
                 // Victory!
                 System.out.println("Du besegrar draken och samlar skatten.\n" +
                         "Kan du fly denna grotta med alla dina rikedomar?");
-                return true;
-            }
-            else {
+            } else {
                 System.out.println("Du besegrar odjuret.");
-                return true;
             }
-        } 
+            return true;
+        }
         else {
             System.out.println("Tyvärr har du blivit eliminerad :(. Försök igen från början!");
             return false;
