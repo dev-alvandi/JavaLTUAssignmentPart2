@@ -4,7 +4,7 @@
    * #### Enum används för att skilja mellan olika rum.
    * #### Rummen kan ha olika egenskaper definierade med `RoomProperty`, t.ex., `MONSTER`, `TREASURE`, `START`, och `END`.
    * #### Slutrummet (`END`) avslutar spelet när spelaren når det.
-   * #### RoomProperty är basklassen till Klasserna Item och Monster.
+   * #### RoomProperty är basklassen till klasserna Item och Monster.
 
 #### Item och arv
 * #### Key, Potion, Treasure, och Weapon ärvar från Item klassen
