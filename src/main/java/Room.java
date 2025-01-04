@@ -91,11 +91,22 @@ public class Room {
         }
 
         while (monster.getHealthPoints() > 0 && player.getHealthPoints() > 0) {
-            System.out.printf("Ett %s attackerar dig och gör %d skada. %n", monster.getName(), monster.getDamage());
-            System.out.printf("Du attackerar odjuret och gör %d skada. %n", player.getDamage());
+            
+            if (monster.getName().equals("drake")) {
+                System.out.printf("En %s attackerar dig och gör %d skada. %n", monster.getName(), monster.getDamage());
+                System.out.printf("Du attackerar draken och gör %d skada. %n", player.getDamage());
 
-            monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
-            player.setHealthPoints(player.getHealthPoints() - monster.getDamage());
+                monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
+                player.setHealthPoints(player.getHealthPoints() - monster.getDamage()); 
+            }
+            else {
+                System.out.printf("Ett %s attackerar dig och gör %d skada. %n", monster.getName(), monster.getDamage());
+                System.out.printf("Du attackerar odjuret och gör %d skada. %n", player.getDamage());
+
+                monster.setHealthPoints(monster.getHealthPoints() - player.getDamage());
+                player.setHealthPoints(player.getHealthPoints() - monster.getDamage());
+            }
+            
         }
 
         

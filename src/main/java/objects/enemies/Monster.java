@@ -2,6 +2,12 @@ package objects.enemies;
 
 import objects.RoomProperty;
 
+/**
+ * * Class for creating the monsters, including a picture of the drake, 
+ * * the name of the monster, and setting and getting the monsters 
+ * * health points and damage during battle.
+ */
+
 public class Monster extends RoomProperty {
 
     public static String dragonShape =

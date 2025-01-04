@@ -111,7 +111,7 @@ public class Dungeon {
                     System.out.println("Du kan se din hälsopoäng [h]");
                     System.out.println("Du kan se ditt lager [i]");
 
-                    // or if player chooses a locked door, then show picture and reprint current room narrative
+                // or if player chooses a locked door, then show picture and reprint current room narrative
                 } else if (door.getPosition().equals(userInput) && door.isLocked() && !player.getInventory().containsKey("nyckeln")) {
                     System.out.println("Du har ingen nyckel som passar.\n" +
                             "Du kikar genom nyckelhålet och ser en skattkista full med guld.\n" +
@@ -124,6 +124,7 @@ public class Dungeon {
                     System.out.println("Du kan se din hälsopoäng [h]");
                     System.out.println("Du kan se ditt lager [i]");
 
+                // or if a player chooses a locked door and has a key, open door
                 } else if (door.getPosition().equals(userInput) && door.isLocked() && player.getInventory().containsKey("nyckeln")) {
                     currentRoom = door.getDestination();
 
@@ -131,8 +132,6 @@ public class Dungeon {
                         isLoopRunning = false;
                     }
                     isCorrectInputEnterred = true;
-                    System.out.println("Du kan se din hälsopoäng [h]");
-                    System.out.println("Du kan se ditt lager [i]");
                 }
 
             }
