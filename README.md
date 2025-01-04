@@ -20,6 +20,6 @@
    * #### Spelaren kan när som helst kolla föremål som finns i lager (i) och befintliga hälsopoäng (h)
 
 #### Hälsodrycken
-   * #### Hälsodrycken återställer spelarens hälsopoäng till max (10) om spelaren har mindre är max hälsopäng vid upplockning.
+   * #### Hälsodrycken återställer spelarens hälsopoäng till max (10) om spelaren har mindre är max hälsopoäng vid upplockning.
    * #### Om spelaren redan har full hälsa vid upplockningen, hamnar drycken i lagret.
    * #### När spelaren senare förlorar hälsopoäng kan hen när som helst använda drycken genom att skriva "d" i spelet.
