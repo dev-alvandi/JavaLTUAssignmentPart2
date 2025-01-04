@@ -66,8 +66,9 @@ public class Dungeon {
             if (userInput.equals("d") && player.getHealthPoints() < 10) {
                 player.setHealthPoints(10);
                 System.out.println("Du tog upp och drack hälsodrycken. Nu har du max hälsopoängen (10)");
-                currentRoom.doNarrative(player);
                 player.getInventory().remove("hälsodrycken");
+                currentRoom.doNarrative(player);
+                printPlayerHealthPointAndInventory();
                 isCorrectInputEnterred = true;
             }
 
@@ -75,11 +76,13 @@ public class Dungeon {
                 System.out.println(player.printInventory());
                 currentRoom.doNarrative(player);
                 isCorrectInputEnterred = true;
+                printPlayerHealthPointAndInventory();
             }
 
             if (userInput.equals("h")) {
                 System.out.printf("Du har %d hälsopoäng.%n", player.getHealthPoints());
                 currentRoom.doNarrative(player);
+                printPlayerHealthPointAndInventory();
                 isCorrectInputEnterred = true;
             }
 
@@ -103,9 +106,8 @@ public class Dungeon {
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
                     }
+                    printPlayerHealthPointAndInventory();
                     isCorrectInputEnterred = true;
-                    System.out.println("Du kan se din hälsopoäng [h]");
-                    System.out.println("Du kan se ditt lager [i]");
 
                     // or if player chooses a locked door, then show picture and reprint current room narrative
                 } else if (door.getPosition().equals(userInput) && door.isLocked() && !player.getInventory().containsKey("nyckeln")) {
@@ -116,19 +118,18 @@ public class Dungeon {
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
                     }
+                    printPlayerHealthPointAndInventory();
                     isCorrectInputEnterred = true;
-                    System.out.println("Du kan se din hälsopoäng [h]");
-                    System.out.println("Du kan se ditt lager [i]");
 
+                    // or if a player chooses a locked door and has a key, open door
                 } else if (door.getPosition().equals(userInput) && door.isLocked() && player.getInventory().containsKey("nyckeln")) {
                     currentRoom = door.getDestination();
 
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
                     }
+                    printPlayerHealthPointAndInventory();
                     isCorrectInputEnterred = true;
-                    System.out.println("Du kan se din hälsopoäng [h]");
-                    System.out.println("Du kan se ditt lager [i]");
                 }
 
             }
@@ -140,11 +141,11 @@ public class Dungeon {
                         player.setHealthPoints(10);
                         System.out.println("Du tog upp och drack hälsodrycken. Nu har du max hälsopoängen (10)");
                         currentRoom.doNarrative(player);
+                        printPlayerHealthPointAndInventory();
                     } else {
                         System.out.printf("Du tog upp %s.%n", roomProperty.getName());
                         currentRoom.doNarrative(player);
-                        System.out.println("Du kan se din hälsopoäng [h]");
-                        System.out.println("Du kan se ditt lager [i]");
+                        printPlayerHealthPointAndInventory();
                         player.addToInventory(roomProperty.getName(), (Item) roomProperty);
                     }
                     currentRoom.setRoomProperties(new ArrayList<>());
@@ -165,5 +166,10 @@ public class Dungeon {
                 System.out.println("Du har skrivit fel. Försök igen!");
             }
         }
+    }
+
+    private static void printPlayerHealthPointAndInventory() {
+        System.out.println("Du kan se din hälsopoäng [h]");
+        System.out.println("Du kan se ditt lager [i]");
     }
 }
