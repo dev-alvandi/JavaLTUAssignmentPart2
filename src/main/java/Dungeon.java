@@ -153,15 +153,12 @@ public class Dungeon {
                         player.setDamage(2);
                     }
                     isCorrectInputEnterred = true;
-                } else if (roomProperty instanceof Item) {
+                } else if (isCorrectInputEnterred && roomProperty instanceof Item) {
                     System.out.println(roomProperty.getDescription());
                 }
             }
 
-
-
-
-//            // Exception is thrown if player chooses wrong direction
+            // Exception is thrown if player chooses wrong direction
             if (!isCorrectInputEnterred) {
                 System.out.println("Du har skrivit fel. Försök igen!");
             }
