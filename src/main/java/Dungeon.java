@@ -1,11 +1,9 @@
 import objects.RoomProperty;
-import objects.enemies.Monster;
 import objects.items.Item;
 import objects.items.Treasure;
 import objects.items.Weapon;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,7 +16,6 @@ public class Dungeon {
     // instance variables
     private Room currentRoom;
     private String welcomeMessage;
-    private List<String> directions = new ArrayList<>(List.of("ö", "n", "s", "v"));
     private boolean isCorrectInputEnterred;
     private boolean isLoopRunning = true;
 
@@ -105,8 +102,9 @@ public class Dungeon {
 
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
+                    } else {
+                        printPlayerHealthPointAndInventory();
                     }
-                    printPlayerHealthPointAndInventory();
                     isCorrectInputEnterred = true;
 
                     // or if player chooses a locked door, then show picture and reprint current room narrative
@@ -117,8 +115,9 @@ public class Dungeon {
 
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
+                    } else {
+                        printPlayerHealthPointAndInventory();
                     }
-                    printPlayerHealthPointAndInventory();
                     isCorrectInputEnterred = true;
 
                     // or if a player chooses a locked door and has a key, open door
@@ -127,8 +126,9 @@ public class Dungeon {
 
                     if(!currentRoom.doNarrative(player)) {
                         isLoopRunning = false;
+                    } else {
+                        printPlayerHealthPointAndInventory();
                     }
-                    printPlayerHealthPointAndInventory();
                     isCorrectInputEnterred = true;
                 }
 
